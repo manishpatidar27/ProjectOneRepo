@@ -40,7 +40,7 @@ public class ProgressHUD extends Dialog {
         }
     }
 
-    public static ProgressHUD show(Context context) {
+    public static ProgressHUD init(Context context) {
 
         ProgressHUD dialog = new ProgressHUD(context, R.style.ProgressHUD);
         dialog.setTitle("");
@@ -56,20 +56,20 @@ public class ProgressHUD extends Dialog {
         return dialog;
     }
 
-    public static ProgressHUD init(Context context, String message) {
-
-        ProgressHUD dialog = new ProgressHUD(context, R.style.ProgressHUD);
-        dialog.setTitle("");
-        dialog.setContentView(R.layout.progress_bar_loader);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        TextView textOfLoader = (TextView) dialog.findViewById(R.id.textOfLoader);
-        textOfLoader.setText(message);
-        textOfLoader.setTextSize(11.0f);
-        dialog.getWindow().getAttributes().gravity = Gravity.CENTER;
-        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-        lp.dimAmount = 0.4f;
-        dialog.getWindow().setAttributes(lp);
-        return dialog;
-    }
+//    public static ProgressHUD init(Context context, String message) {
+//
+//        ProgressHUD dialog = new ProgressHUD(context, R.style.ProgressHUD);
+//        dialog.setTitle("");
+//        dialog.setContentView(R.layout.progress_bar_loader);
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(false);
+//        TextView textOfLoader = (TextView) dialog.findViewById(R.id.textOfLoader);
+//        textOfLoader.setText(message);
+//        textOfLoader.setTextSize(11.0f);
+//        dialog.getWindow().getAttributes().gravity = Gravity.CENTER;
+//        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+//        lp.dimAmount = 0.4f;
+//        dialog.getWindow().setAttributes(lp);
+//        return dialog;
+//    }
 }
