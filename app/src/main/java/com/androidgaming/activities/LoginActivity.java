@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.androidgaming.R;
 import com.androidgaming.helper.ProgressHUD;
 
+
+//This is added for git first commit
 public class LoginActivity extends AppCompatActivity {
     ProgressHUD progressHUD;
     @Override
