@@ -39,8 +39,10 @@ public class SplashScreen extends AppCompatActivity {
 
     private void loadScreen() {
 
-        Intent intentToLoginActivity = new Intent(SplashScreen.this, LoginActivity.class);
-        startActivity(intentToLoginActivity);
+
+
+        Intent intentToLoginActivity11 = new Intent(SplashScreen.this, LoginActivity.class);
+        startActivity(intentToLoginActivity11);
         finish();
         overridePendingTransition(R.anim.right_to_left_start, R.anim.right_to_left_end);
     }
