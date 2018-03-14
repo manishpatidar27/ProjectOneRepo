@@ -3,16 +3,11 @@ package com.androidgaming.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.androidgaming.R;
-import com.androidgaming.helper.ProgressHUD;
-
-public class LoginActivity extends AppCompatActivity {
+public class HomeScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        ProgressHUD.show(LoginActivity.this);
+        setContentView(R.layout.activity_home_screen);
     }
 }
