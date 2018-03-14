@@ -7,12 +7,14 @@ import com.androidgaming.R;
 import com.androidgaming.helper.ProgressHUD;
 
 public class LoginActivity extends AppCompatActivity {
-
+    ProgressHUD progressHUD;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ProgressHUD.show(LoginActivity.this);
+        progressHUD = new ProgressHUD(LoginActivity.this);
+        progressHUD.show();
+
     }
 }
