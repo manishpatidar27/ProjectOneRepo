@@ -51,7 +51,7 @@ public class ProgressHUD extends Dialog {
         textOfLoader.setText("");
         dialog.getWindow().getAttributes().gravity = Gravity.CENTER;
         WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-        lp.dimAmount = 0.4f;
+        lp.dimAmount = 0.5f;
         dialog.getWindow().setAttributes(lp);
         return dialog;
     }
