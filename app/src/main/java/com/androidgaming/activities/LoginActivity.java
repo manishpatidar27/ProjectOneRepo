@@ -16,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         progressHUD = ProgressHUD.init(LoginActivity.this);
-        progressHUD.show();
+      //  progressHUD.show();
 
     }
 }
