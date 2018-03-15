@@ -20,12 +20,68 @@
         android:background="@color/blue"
         android:layout_height="0dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:minHeight="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                android:id="@+id/editText_first_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:hint="@string/hint_user_name"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/padding_large"
+                android:textColorHint="@color/black"
+                android:background="@color/transparent"
+                android:inputType="textPersonName|textNoSuggestions"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_small" />
+
+
+            <EditText
+                android:id="@+id/editText_password"
+                android:layout_below="@+id/editText_first_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:hint="@string/hint_password"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/padding_large"
+                android:textColorHint="@color/black"
+                android:background="@color/transparent"
+                android:inputType="textPersonName|textNoSuggestions"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_small" />
+
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_weight="0.75"
         android:layout_height="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:minHeight="40dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/black"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
