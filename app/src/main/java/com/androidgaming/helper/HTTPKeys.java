@@ -1,0 +1,23 @@
+package com.androidgaming.helper;
+
+/**
+ * Created by Manish Patidar on 10-08-2017.
+ */
+
+public enum HTTPKeys {
+
+    RETROFIT_FAILURE,
+    HTTP_SOME_OTHER_ERROR,
+    HTTP_REQUEST_TIME_OUT,
+    HTTP_GATE_WAY_TIME_OUT,
+    HTTP_NETWORK_READ_TIME_OUT,
+    HTTP_NETWORK_CONNECT_TIME_OUT,
+    HTTP_UN_AUTHORISED_ACCESS,
+    HTTP_PAGE_NOT_FOUND,
+    HTTP_FORBIDDEN,
+    HTTP_INTERNAL_SERVER_ERROR,
+    HTTP_RESOURCE_NOT_ALLOWED;
+
+
+
+}

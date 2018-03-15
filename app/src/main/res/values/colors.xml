@@ -9,6 +9,7 @@
 
     <color name="transparent">#00000000</color>
     <color name="blue">#586BB7</color>
+    <color name="border_color">#acacac</color>
 
 
 </resources>

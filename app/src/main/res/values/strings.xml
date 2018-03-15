@@ -3,4 +3,25 @@
     <string name="hint_user_name">User Name</string>
     <string name="hint_password">Password</string>
     <string name="login_text">LOGIN</string>
+    <string name="blank_hyphen">-</string>
+    <string name="title_dialog_alert_validation">Alert</string>
+    <string name="message_dialog_for_internet">Application requires an internet connection. Please check your connection and try again.</string>
+    <string name="message_dialog_un_authorised_access">Session expired</string>
+    <string name="button_dialog_ok">Ok</string>
+
+    <string name="message_dialog_forbidden">Forbidden error</string>
+
+    <string name="message_dialog_resource_not_allowed">Resource not allowed</string>
+    <string name="message_dialog_page_not_found">Page not found</string>
+    <string name="message_dialog_request_time_out">Request Timeout</string>
+    <string name="message_dialog_internal_server_error">Internal server error</string>
+    <string name="message_dialog_gate_way_time_out">Gateway Timeout</string>
+    <string name="message_dialog_network_read_time_out_error">Network read timeout error</string>
+    <string name="message_dialog_network_connect_time_out_error">Network connect timeout error</string>
+    <string name="message_dialog_some_error_occurred">Some error occurred. Please try again later</string>
+
+    <string name="session_expire">Your Session is expired, Please login again</string>
+
+    <string name="title_dialog_message">Message</string>
+
 </resources>
