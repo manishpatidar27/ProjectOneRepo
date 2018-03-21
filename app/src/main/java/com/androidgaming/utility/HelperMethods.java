@@ -119,6 +119,8 @@ public class HelperMethods {
     }
 
 
+
+
     public static void responseNotSuccessful(Response<ResponseBody> response, Context mContext) {
         String stringResponse = "";
         try {
@@ -160,10 +162,10 @@ public class HelperMethods {
                     } else if (response.code() == 404) {
 
 
-//                        DialogConstant.showErrorMessageHTTP(mContext, HTTPKeys.HTTP_PAGE_NOT_FOUND);
+                        DialogConstant.showErrorMessageHTTP(mContext, HTTPKeys.HTTP_PAGE_NOT_FOUND);
 
-                        JSONObject responseJson = new JSONObject(stringResponse);
-                        DialogConstant.showMessageFromServer(mContext, responseJson.getString("message").toString());
+//                        JSONObject responseJson = new JSONObject(stringResponse);
+//                        DialogConstant.showMessageFromServer(mContext, responseJson.getString("message").toString());
 
                     } else if (response.code() == 405) {
 
@@ -182,9 +184,10 @@ public class HelperMethods {
                         // 500 Internal server error
                         // Internal Server Error. The 500 status code, or Internal Server Error, means that server cannot process
                         // the request for an unknown reason. Sometimes this code will appear when more specific 5xx errors are more appropriate
-                        JSONObject responseJson = new JSONObject(stringResponse);
-                        DialogConstant.showMessageFromServer(mContext, responseJson.getString("message").toString());
+//                        JSONObject responseJson = new JSONObject(stringResponse);
+//                        DialogConstant.showMessageFromServer(mContext, responseJson.getString("message").toString());
 
+                        DialogConstant.showErrorMessageHTTP(mContext, HTTPKeys.HTTP_INTERNAL_SERVER_ERROR);
                     } else if (response.code() == 504) {
 
                         // 504
@@ -195,9 +198,9 @@ public class HelperMethods {
                         JSONObject responseJson = new JSONObject(stringResponse);
 
 
-                        DialogConstant.showMessageFromServer(mContext, responseJson.getString("message").toString());
+//                        DialogConstant.showMessageFromServer(mContext, responseJson.getString("message").toString());
 
-                        // DialogConstant.showErrorMessageHTTP(mContext, HTTPKeys.HTTP_GATE_WAY_TIME_OUT);
+                         DialogConstant.showErrorMessageHTTP(mContext, HTTPKeys.HTTP_GATE_WAY_TIME_OUT);
 
                     } else if (response.code() == 598) {
 

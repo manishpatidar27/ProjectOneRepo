@@ -343,7 +343,7 @@ public class DialogConstant {
     }
 
 
-    public static void showMessageFromServer(final Context contextP, final String message) {
+    public static void showMessageFromServer(final Context contextP,String message) {
 
 
         final Dialog alertDialog = new Dialog(contextP);
@@ -361,7 +361,7 @@ public class DialogConstant {
         dialog_header.setText(contextP.getResources().getString(R.string.title_dialog_alert_validation));
 
 
-            dialog_message.setText(contextP.getResources().getString(R.string.session_expire));
+        dialog_message.setText(message);
 
 
         button_ok.setOnClickListener(new View.OnClickListener() {
@@ -370,20 +370,19 @@ public class DialogConstant {
             public void onClick(View v) {
 
 
+//                try {
+//
+//
+//                    Intent intent = new Intent(contextP, LoginActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    contextP.startActivity(intent);
+//                    ((Activity) contextP).finish();
+//
+//                } catch (Exception e) {
+//                    alertDialog.dismiss();
+//                }
 
-
-                    try {
-
-
-                        Intent intent = new Intent(contextP, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        contextP.startActivity(intent);
-                        ((Activity) contextP).finish();
-
-                    } catch (Exception e) {
-                        alertDialog.dismiss();
-                    }
-
+                alertDialog.dismiss();
 
 
             }

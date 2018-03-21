@@ -32,5 +32,9 @@
     <string name="val_password">Please enter password</string>
     <string name="user_name_pass_not_matched">User name or password is not valid</string>
     <string name="open_sans_regular">OpenSans-Regular.ttf</string>
+    <string name="patron_solutions">PATRON SOLUTIONS</string>
+    <string name="welcome_to">WELCOME TO GAMING</string>
+    <string name="keep_me_login">Keep Me Logged In</string>
+    <string name="forgot_your_password">Forgot Your Password?</string>
 
 </resources>

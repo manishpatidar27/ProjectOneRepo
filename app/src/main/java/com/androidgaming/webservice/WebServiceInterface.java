@@ -22,16 +22,96 @@ import retrofit2.http.QueryMap;
 
 public interface WebServiceInterface {
 
-    @POST("geocode/json")
-    Call<ResponseBody> getAddressFromLatLong(@Query("key") String serverKey,
-                                             @Query("sensor") String sensor,
-                                             @Query("latlng") String latlng);
 
-    @POST("geocode/json")
-    Call<ResponseBody> getLatLongFromAddress(@Query("key") String serverKey,
-                                             @Query("sensor") String sensor,
-                                             @Query("address") String address);
+    @POST("admin/api/login")
+    Call<ResponseBody> login();
 
+
+    @GET("admin/api/check/{api_token}")
+    Call<ResponseBody> checkSessionLogin(@Path("api_token") String api_token);
+
+
+    @GET("admin/api/logout/{api_token}")
+    Call<ResponseBody> logout(@Path("api_token") String api_token);
+
+
+    @GET("/admin/api/dashboard")
+    Call<ResponseBody> dashBoard(@Query("api_token") String api_token);
+
+
+    @GET("admin/api/location")
+    Call<ResponseBody> location(@Query("api_token") String api_token);
+
+
+    @GET("admin/api/segments")
+    Call<ResponseBody> segments(@Query("api_token") String api_token);
+
+
+
+    @GET("admin/api/areas")
+    Call<ResponseBody> areas(@Query("api_token") String api_token);
+
+    @GET("api/categories/main")
+    Call<ResponseBody> categories(@Query("api_token") String api_token);
+
+    @POST("admin/api/categories/subcat/{category_id}")
+    Call<ResponseBody> subCategory(@Path("category_id") String category_id, @Query("api_token") String api_token);
+
+
+
+
+    @POST("api/feedback/audio")
+    Call<ResponseBody> feedbackAudio(@Query("api_token") String api_token);
+
+
+
+    @POST("api/feedback/video")
+    Call<ResponseBody> feedbackVideo(@Query("api_token") String api_token);
+
+
+
+    @POST("api/feedback/image")
+    Call<ResponseBody> feedbackImage(@Query("api_token") String api_token);
+
+
+
+    @POST("api/feedback")
+    Call<ResponseBody> feeback(@Query("api_token") String api_token);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     @POST("directions/json")
     Call<ResponseBody> getDirectionsUrl(@Query("origin") String origin,
                                         @Query("key") String key,
@@ -39,7 +119,7 @@ public interface WebServiceInterface {
                                         @Query("sensor") String sensor,
                                         @Query("mode") String mode);
 
-    /*APIS RELATED TO AMREK*/
+    *//*APIS RELATED TO AMREK*//*
     @GET("account/check")
     Call<ResponseBody> checkAccount(@Header("language") String language,
                                     @Query("mobile") String mobileNumber,
@@ -68,7 +148,7 @@ public interface WebServiceInterface {
 
 
 
-    /*-----------------------------HAVING ERROR IN ARRAY--------------------------------------------*/
+    *//*-----------------------------HAVING ERROR IN ARRAY--------------------------------------------*//*
 
     @Multipart
     @POST("user/update")
@@ -243,6 +323,6 @@ public interface WebServiceInterface {
     @POST("account/check-email")
     Call<ResponseBody> checkEmail(@Header("language") String language,
                                   @Query("email") String email,
-                                  @Query("role") String role);
+                                  @Query("role") String role);*/
 
 }
