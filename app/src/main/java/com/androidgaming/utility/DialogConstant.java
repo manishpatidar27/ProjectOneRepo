@@ -426,42 +426,42 @@ public class DialogConstant {
     }
 
 
-    public static void showValidationMessage(final Context contextP, final String message, final boolean activityClose) {
-
-
-        final Dialog alertDialog = new Dialog(contextP);
-
-        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alertDialog.setCancelable(false);
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        alertDialog.setContentView(R.layout.dialog_single_button);
-
-        TextView dialog_header = (TextView) alertDialog.findViewById(R.id.dialog_header);
-        TextView dialog_message = (TextView) alertDialog.findViewById(R.id.dialog_message);
-        TextView button_ok = (TextView) alertDialog.findViewById(R.id.button_ok);
-
-        dialog_header.setText(contextP.getResources().getString(R.string.title_dialog_alert_validation));
-        dialog_message.setText(message);
-
-        button_ok.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                if (activityClose == true) {
-                    alertDialog.dismiss();
-                    ((Activity) contextP).finish();
-                } else {
-                    alertDialog.dismiss();
-                }
-
-            }
-        });
-
-        alertDialog.show();
-
-    }
+//    public static void showValidationMessage(final Context contextP, final String message, final boolean activityClose) {
+//
+//
+//        final Dialog alertDialog = new Dialog(contextP);
+//
+//        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        alertDialog.setCancelable(false);
+//        alertDialog.setCanceledOnTouchOutside(false);
+//        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        alertDialog.setContentView(R.layout.dialog_single_button);
+//
+//        TextView dialog_header = (TextView) alertDialog.findViewById(R.id.dialog_header);
+//        TextView dialog_message = (TextView) alertDialog.findViewById(R.id.dialog_message);
+//        TextView button_ok = (TextView) alertDialog.findViewById(R.id.button_ok);
+//
+//        dialog_header.setText(contextP.getResources().getString(R.string.title_dialog_alert_validation));
+//        dialog_message.setText(message);
+//
+//        button_ok.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (activityClose == true) {
+//                    alertDialog.dismiss();
+//                    ((Activity) contextP).finish();
+//                } else {
+//                    alertDialog.dismiss();
+//                }
+//
+//            }
+//        });
+//
+//        alertDialog.show();
+//
+//    }
 
 
     public interface OnConfirmedListener {

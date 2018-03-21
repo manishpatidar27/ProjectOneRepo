@@ -7,7 +7,7 @@ import android.location.Location;
 import android.util.Log;
 
 
-
+import com.androidgaming.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +22,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class AppController extends Application {
@@ -71,6 +71,14 @@ public class AppController extends Application {
 //
 //            Log.v("APP CONTROLLER", "FIRE BASE IS not empty  ");
 //        }
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("OpenSans-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
+
 
     }
 

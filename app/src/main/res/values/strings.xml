@@ -24,4 +24,13 @@
 
     <string name="title_dialog_message">Message</string>
 
+
+
+    <string name="val_user_name">Please enter user name</string>
+    <string name="val_email">Please enter email</string>
+    <string name="val_email_not_valid">Please enter a valid email</string>
+    <string name="val_password">Please enter password</string>
+    <string name="user_name_pass_not_matched">User name or password is not valid</string>
+    <string name="open_sans_regular">OpenSans-Regular.ttf</string>
+
 </resources>
