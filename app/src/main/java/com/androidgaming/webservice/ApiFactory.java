@@ -56,7 +56,10 @@ public class ApiFactory {
 
 
 
-    public static Retrofit getRetrofitClientWithHeader(final Context context) {
+//    public static Retrofit getRetrofitClientWithHeader(final Context context) {
+
+
+    public static Retrofit getRetrofitClientWithHeader() {
 
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
