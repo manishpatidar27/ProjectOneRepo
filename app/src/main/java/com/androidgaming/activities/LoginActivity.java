@@ -2,9 +2,9 @@ package com.androidgaming.activities;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,12 +24,8 @@ import com.androidgaming.webservice.WebServiceInterface;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.TreeMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -65,9 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         editText_password = (EditText) findViewById(R.id.editText_password);
         login_button = (TextView) findViewById(R.id.login_button);
         login_button.setOnClickListener(listenersForTheScreen);
-
         forgot_password = (TextView) findViewById(R.id.forgot_password);
-
         forgot_password.setPaintFlags(forgot_password.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgot_password.setText(LoginActivity.this.getResources().getString(R.string.forgot_your_password));
 
@@ -149,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
 //                return;
 //            }
 
+
             callAPIForLogin();
 
         } else {
@@ -159,55 +154,53 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    private void navigateToHomeScreen() {
+        Intent intent = new Intent(this, HomeScreen.class);
+        startActivity(intent);
+        finish();
+
+        overridePendingTransition(R.anim.right_to_left_start, R.anim.right_to_left_end);
+
+
+    }
+
     private void callAPIForLogin() {
+
+        Map<String, String> loginRequest = new HashMap<>();
+
+
+        loginRequest.put("username", editText_first_name.getText().toString());
+        loginRequest.put("password", editText_password.getText().toString());
+
 
         if (CheckInternet.isInternetOn(LoginActivity.this)) {
             progressHUD.show();
-
-
-            WebServiceInterface api = ApiFactory.getRetrofitClient().create(WebServiceInterface.class);
-
+            WebServiceInterface api = ApiFactory.getRetrofitClientWithHeader().create(WebServiceInterface.class);
             Call<ResponseBody> call = null;
-
-
-            call = api.login();
-
-
+            call = api.login(loginRequest);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                     progressHUD.hide();
                     if (response.isSuccessful()) {
-
                         try {
-
                             JSONObject responseJson = new JSONObject(HelperMethods.responseYesSuccessful(response));
-
-
+                            Log.e("TAG ", "Response of Login Api are " + responseJson.toString());
                             if (responseJson.getString("status").equalsIgnoreCase("true")) {
 
                                 Toast.makeText(LoginActivity.this, responseJson.getString("message"), Toast.LENGTH_LONG).show();
 
 
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_ID, responseJson.getJSONObject("data").getString("id"));
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_NAME, responseJson.getJSONObject("data").getString("name"));
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_EMAIL, responseJson.getJSONObject("data").getString("email"));
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_USERNAME, responseJson.getJSONObject("data").getString("username"));
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_TYPE, responseJson.getJSONObject("data").getString("usertype"));
-
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_LOCATION, responseJson.getJSONObject("data").getString("location"));
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.API_TOKEN, responseJson.getJSONObject("data").getString("api_token"));
-
                                 CustomPreference.getInstance(LoginActivity.this).addValue(PreferenceKeys.USER_IS_ACTIVE, responseJson.getJSONObject("data").getString("is_active"));
-
+                                navigateToHomeScreen();
 
                             } else if (responseJson.getString("status").equalsIgnoreCase("false")) {
 

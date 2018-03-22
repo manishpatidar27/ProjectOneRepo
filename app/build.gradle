@@ -42,5 +42,10 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.+'
 
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+
     compile project(':MPChartLibrary')
+
+    compile 'com.crystal:crystalrangeseekbar:1.1.3'
+
+    compile 'com.github.channguyen:rsv:1.0.1'
 }

@@ -1,20 +1,14 @@
 package com.androidgaming.webservice;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by HP on 03-05-2017.
@@ -24,7 +18,7 @@ public interface WebServiceInterface {
 
 
     @POST("admin/api/login")
-    Call<ResponseBody> login();
+    Call<ResponseBody> login(@Body Map<String,String> requestMap);
 
 
     @GET("admin/api/check/{api_token}")

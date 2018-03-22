@@ -25,7 +25,6 @@
     <string name="title_dialog_message">Message</string>
 
 
-
     <string name="val_user_name">Please enter user name</string>
     <string name="val_email">Please enter email</string>
     <string name="val_email_not_valid">Please enter a valid email</string>
@@ -36,5 +35,18 @@
     <string name="welcome_to">WELCOME TO GAMING</string>
     <string name="keep_me_login">Keep Me Logged In</string>
     <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="dash_board">Dashboard</string>
+    <string name="reports">Reports</string>
+    <string name="feedback">Feedback</string>
+    <string name="action_plan">Action Plan</string>
+    <string name="setting">Setting</string>
+    <string name="log_out">Log out</string>
+
+    <string name="log_out_message">Are you sure , you want to logout </string>
+
+    <string name="button_ok">ok</string>
+
+    <string name="button_cancel">Cancel</string>
+
 
 </resources>
