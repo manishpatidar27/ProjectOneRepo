@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.androidgaming.fragment.TabFragment1;
 import com.androidgaming.fragment.TabFragment2;
 import com.androidgaming.fragment.TabFragment3;
+import com.androidgaming.fragment.TabFragment4;
+import com.androidgaming.fragment.TabFragment5;
 
 
 /**
@@ -32,8 +34,17 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 TabFragment2 tab2 = new TabFragment2();
                 return tab2;
             case 2:
-                TabFragment3 tab3 = new TabFragment3();
+                TabFragment1 tab3 = new TabFragment1();
+                //TabFragment3 tab3 = new TabFragment3();
                 return tab3;
+            case 3:
+                TabFragment4 tab4 = new TabFragment4();
+                return tab4;
+            case 4:
+                TabFragment1 tab5 = new TabFragment1();
+//                TabFragment5 tab5 = new TabFragment5();
+                return tab5;
+
             default:
                 return null;
         }

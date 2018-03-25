@@ -36,7 +36,6 @@ import retrofit2.Response;
 //This is added for git first commit
 public class LoginActivity extends AppCompatActivity {
 
-
     private ProgressHUD progressHUD;
     private EditText editText_first_name;
     private EditText editText_password;
@@ -47,12 +46,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         progressHUD = ProgressHUD.init(LoginActivity.this);
-
-
         initViews();
-
     }
 
     private void initViews() {

@@ -191,7 +191,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
     private void navigateToGraphScreen() {
-        Intent intent = new Intent(this, GraphScreen.class);
+        Intent intent = new Intent(this, GraphScreenNew.class);
         startActivity(intent);
         overridePendingTransition(R.anim.right_to_left_start, R.anim.right_to_left_end);
     }

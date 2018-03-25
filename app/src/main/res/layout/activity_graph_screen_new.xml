@@ -9,14 +9,55 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="" />
+        app:title="" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:tint="@color/white"
+                android:layout_alignParentLeft="true"
+                android:src="@mipmap/dashboard"
+                android:layout_height="20dp" />
+
+            <RelativeLayout
+                android:gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="@dimen/margin_medium"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/search"
+                    android:layout_width="20dp"
+                    android:layout_toLeftOf="@+id/notification"
+                    android:tint="@color/white"
+                    android:layout_marginRight="@dimen/text_small"
+                    android:src="@mipmap/search"
+                    android:layout_height="20dp" />
+
+                <ImageView
+                    android:id="@+id/notification"
+                    android:layout_width="20dp"
+                    android:layout_alignParentRight="true"
+                    android:tint="@color/white"
+                    android:src="@mipmap/notification"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -25,6 +66,7 @@
         android:layout_below="@+id/toolbar"
         android:background="@color/white"
         android:elevation="6dp"
+        app:tabIndicatorHeight="2.5dp"
         app:tabSelectedTextColor="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"

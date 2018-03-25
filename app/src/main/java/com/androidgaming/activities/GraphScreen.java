@@ -42,11 +42,10 @@ public class GraphScreen extends DemoBase implements OnChartValueSelectedListene
         setContentView(R.layout.activity_graph_screen);
 
         mChart = (BarChart) findViewById(R.id.chart1);
+
         mChart.setOnChartValueSelectedListener(this);
 
         mChart.setDrawBarShadow(false);
-
-
 
         mChart.getDescription().setEnabled(false);
 
@@ -76,7 +75,6 @@ public class GraphScreen extends DemoBase implements OnChartValueSelectedListene
         mChart.setMotionEventSplittingEnabled(false);
 
         // mChart.setDrawYLabels(false);
-
 
         mChart.getLegend().setForm(Legend.LegendForm.NONE);
 

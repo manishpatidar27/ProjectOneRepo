@@ -1,52 +1,92 @@
 <resources>
+
     <string name="app_name">AndroidGaming</string>
+
     <string name="hint_user_name">User Name</string>
+
     <string name="hint_password">Password</string>
+
     <string name="login_text">LOGIN</string>
+
     <string name="blank_hyphen">-</string>
+
     <string name="title_dialog_alert_validation">Alert</string>
+
     <string name="message_dialog_for_internet">Application requires an internet connection. Please check your connection and try again.</string>
+
     <string name="message_dialog_un_authorised_access">Session expired</string>
+
     <string name="button_dialog_ok">Ok</string>
 
     <string name="message_dialog_forbidden">Forbidden error</string>
 
     <string name="message_dialog_resource_not_allowed">Resource not allowed</string>
+
     <string name="message_dialog_page_not_found">Page not found</string>
+
     <string name="message_dialog_request_time_out">Request Timeout</string>
+
     <string name="message_dialog_internal_server_error">Internal server error</string>
+
     <string name="message_dialog_gate_way_time_out">Gateway Timeout</string>
+
     <string name="message_dialog_network_read_time_out_error">Network read timeout error</string>
+
     <string name="message_dialog_network_connect_time_out_error">Network connect timeout error</string>
+
     <string name="message_dialog_some_error_occurred">Some error occurred. Please try again later</string>
 
     <string name="session_expire">Your Session is expired, Please login again</string>
 
     <string name="title_dialog_message">Message</string>
 
-
     <string name="val_user_name">Please enter user name</string>
+
     <string name="val_email">Please enter email</string>
+
     <string name="val_email_not_valid">Please enter a valid email</string>
+
     <string name="val_password">Please enter password</string>
+
     <string name="user_name_pass_not_matched">User name or password is not valid</string>
+
     <string name="open_sans_regular">OpenSans-Regular.ttf</string>
+
     <string name="patron_solutions">PATRON SOLUTIONS</string>
+
     <string name="welcome_to">WELCOME TO GAMING</string>
+
     <string name="keep_me_login">Keep Me Logged In</string>
+
     <string name="forgot_your_password">Forgot Your Password?</string>
+
     <string name="dash_board">Dashboard</string>
+
     <string name="reports">Reports</string>
+
     <string name="feedback">Feedback</string>
+
     <string name="action_plan">Action Plan</string>
+
     <string name="setting">Setting</string>
+
     <string name="log_out">Log out</string>
 
-    <string name="log_out_message">Are you sure , you want to logout </string>
+    <string name="log_out_message">Are you sure, you want to logout </string>
 
     <string name="button_ok">ok</string>
 
     <string name="button_cancel">Cancel</string>
 
+    <string name="total_feedback">Total Feedback</string>
+
+    <string name="latest_feedback">Latest Feedback</string>
+
+    <string name="top_5_categories">Top 5 categories</string>
+
+    <string name="host_productivity">Host Productivity</string>
+
+    <string name="segment_statistics">Segment Statistics</string>
+    <string name="property_name">Property Name</string>
 
 </resources>

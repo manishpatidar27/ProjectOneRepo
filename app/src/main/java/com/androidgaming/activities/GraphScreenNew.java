@@ -10,18 +10,27 @@ import com.androidgaming.adapter.PagerAdapter;
 
 public class GraphScreenNew extends AppCompatActivity {
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_graph_screen_new);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+
+        tabLayout.addTab(tabLayout.newTab().setText(GraphScreenNew.this.getResources().getString(R.string.total_feedback)));
+        tabLayout.addTab(tabLayout.newTab().setText(GraphScreenNew.this.getResources().getString(R.string.latest_feedback)));
+        tabLayout.addTab(tabLayout.newTab().setText(GraphScreenNew.this.getResources().getString(R.string.top_5_categories)));
+        tabLayout.addTab(tabLayout.newTab().setText(GraphScreenNew.this.getResources().getString(R.string.host_productivity)));
+        tabLayout.addTab(tabLayout.newTab().setText(GraphScreenNew.this.getResources().getString(R.string.segment_statistics)));
+
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
