@@ -125,6 +125,9 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
 //            public void onTabReselected(TabLayout.Tab tab) {
 //
 //            }
+
+
+
 //        });
     }
 
