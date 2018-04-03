@@ -162,6 +162,7 @@ public class TabFragment1 extends Fragment implements OnChartValueSelectedListen
 
 
 
+
     private void setData(int count, float range) {
 
 
@@ -205,6 +206,7 @@ public class TabFragment1 extends Fragment implements OnChartValueSelectedListen
 
         }
     }
+
 
     protected RectF mOnValueSelectedRectF = new RectF();
 

@@ -67,7 +67,7 @@
         </activity>
 
 
-    <activity android:name=".activities.GroupBarChart">
+    <activity android:name=".activities.GraphInScroll">
                   <intent-filter>
                       <action android:name="android.intent.action.MAIN" />
 
