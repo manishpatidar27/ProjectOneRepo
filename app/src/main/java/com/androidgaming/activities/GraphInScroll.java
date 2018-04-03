@@ -82,25 +82,50 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-               switch ( tab.getPosition()){
-                   case 0:
-                       break;
-               }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//               switch ( tab.getPosition()){
+//                   case 0:
+//
+//                       int rel1Pos = rel1.getTop()-25;
+//                       hscrollViewMain.scrollTo(0, rel1Pos);
+//
+//                       break;
+//
+//                   case 1:
+//
+//                       int rel2Pos = rel2.getTop()-25;
+//                       hscrollViewMain.scrollTo(0, rel2Pos);
+//                       break;
+//
+//                   case 2:
+//                       int rel3Pos = rel3.getTop()-25;
+//                       hscrollViewMain.scrollTo(0, rel3Pos);
+//                       break;
+//
+//                   case 3:
+//                       int rel4Pos = rel4.getTop()-25;
+//                       hscrollViewMain.scrollTo(0, rel4Pos);
+//                       break;
+//
+//                   case 4:
+//                       int rel5Pos = rel5.getTop()-25;
+//                       hscrollViewMain.scrollTo(0, rel5Pos);
+//                       break;
+//               }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
     }
 
     private void forOne(){
