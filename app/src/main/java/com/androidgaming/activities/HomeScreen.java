@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_home_screen);
         initView();
         setOnClick();
-        dashBoardApi();
+
     }
 
     private void setOnClick() {
@@ -191,7 +191,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
     private void navigateToGraphScreen() {
-        Intent intent = new Intent(this, GraphScreenNew.class);
+
+
+        Intent intent = new Intent(this, GraphInScroll.class);
+//        Intent intent = new Intent(this, GraphScreenNew.class);
         startActivity(intent);
         overridePendingTransition(R.anim.right_to_left_start, R.anim.right_to_left_end);
     }

@@ -8,11 +8,19 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 
 import com.androidgaming.R;
 import com.androidgaming.graph.MyAxisValueFormatter;
+import com.androidgaming.helper.Constants;
+import com.androidgaming.helper.CustomPreference;
+import com.androidgaming.helper.PreferenceKeys;
+import com.androidgaming.helper.ProgressHUD;
+import com.androidgaming.utility.HelperMethods;
+import com.androidgaming.webservice.ApiFactory;
+import com.androidgaming.webservice.WebServiceInterface;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -29,43 +37,83 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Manish Patidar on 03-04-2018.
  */
-public class GraphInScroll  extends AppCompatActivity implements OnChartValueSelectedListener {
+public class GraphInScroll extends AppCompatActivity implements OnChartValueSelectedListener {
 
     private BarChart groupBarChartThree;
     float barWidth;
     float barSpace;
     float groupSpace;
-
-
-
     protected BarChart mChartOne;
-
     protected BarChart mChartThree;
-
     private Typeface mTfRegular;
     private Typeface mTfLight;
     private NestedScrollView nestedScrollView;
-
+    private CardView viewOneInScroll;
+    private CardView viewTwoInScroll;
+    private CardView viewThreeInScroll;
+    private CardView viewFourInScroll;
+    private CardView viewFiveInScroll;
+    private ProgressHUD progressHUD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_in_scroll);
+
+        progressHUD = ProgressHUD.init(GraphInScroll.this);
+        callAPI();
         forTabs();
         forScrollView();
-
         forOne();
         forThree();
         forFive();
+
+    }
+
+    private void callAPI() {
+        progressHUD.show();
+        WebServiceInterface api = ApiFactory.getRetrofitClientWithHeader().create(WebServiceInterface.class);
+        Call<ResponseBody> call = null;
+        call = api.dashBoard(CustomPreference.getInstance(GraphInScroll.this).getValue(PreferenceKeys.API_TOKEN));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject responseJson = new JSONObject(HelperMethods.responseYesSuccessful(response));
+                        progressHUD.hide();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
     }
 
     private void forScrollView() {
+
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
+        viewOneInScroll = (CardView) findViewById(R.id.viewOneInScroll);
+        viewTwoInScroll = (CardView) findViewById(R.id.viewTwoInScroll);
+        viewThreeInScroll = (CardView) findViewById(R.id.viewThreeInScroll);
+        viewFourInScroll = (CardView) findViewById(R.id.viewFourInScroll);
+        viewFiveInScroll = (CardView) findViewById(R.id.viewFiveInScroll);
 
     }
 
@@ -81,57 +129,61 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
 
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
 
-//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//               switch ( tab.getPosition()){
-//                   case 0:
-//
-//                       int rel1Pos = rel1.getTop()-25;
-//                       hscrollViewMain.scrollTo(0, rel1Pos);
-//
-//                       break;
-//
-//                   case 1:
-//
-//                       int rel2Pos = rel2.getTop()-25;
-//                       hscrollViewMain.scrollTo(0, rel2Pos);
-//                       break;
-//
-//                   case 2:
-//                       int rel3Pos = rel3.getTop()-25;
-//                       hscrollViewMain.scrollTo(0, rel3Pos);
-//                       break;
-//
-//                   case 3:
-//                       int rel4Pos = rel4.getTop()-25;
-//                       hscrollViewMain.scrollTo(0, rel4Pos);
-//                       break;
-//
-//                   case 4:
-//                       int rel5Pos = rel5.getTop()-25;
-//                       hscrollViewMain.scrollTo(0, rel5Pos);
-//                       break;
-//               }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
+                switch (tab.getPosition()) {
 
+                    case 0:
 
+                        int rel1Pos = viewOneInScroll.getTop() - 25;
+                        nestedScrollView.scrollTo(0, rel1Pos);
+                        break;
 
-//        });
+                    case 1:
+
+                        int rel2Pos = viewTwoInScroll.getTop() - 25;
+                        nestedScrollView.scrollTo(0, rel2Pos);
+                        break;
+
+                    case 2:
+
+                        int rel3Pos = viewThreeInScroll.getTop() - 25;
+                        nestedScrollView.scrollTo(0, rel3Pos);
+                        break;
+
+                    case 3:
+
+                        int rel4Pos = viewFourInScroll.getTop() - 25;
+                        nestedScrollView.scrollTo(0, rel4Pos);
+                        break;
+
+                    case 4:
+
+                        int rel5Pos = viewFiveInScroll.getTop() - 25;
+                        nestedScrollView.scrollTo(0, rel5Pos);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
-    private void forOne(){
+
+
+    private void forOne() {
 
         mTfRegular = Typeface.createFromAsset(GraphInScroll.this.getAssets(), "OpenSans-Regular.ttf");
         mTfLight = Typeface.createFromAsset(GraphInScroll.this.getAssets(), "OpenSans-Light.ttf");
@@ -183,13 +235,13 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setLabelCount(6);
         xAxis.setSpaceMin(0.2f);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10","20","30","40","50"}));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
 
 
         YAxis leftAxis = mChartOne.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
         leftAxis.setLabelCount(5, false);
-        leftAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10","20","30","40","50"}));
+        leftAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
 
         IAxisValueFormatter custom = new MyAxisValueFormatter();
         leftAxis.setValueFormatter(custom);
@@ -203,7 +255,7 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         rightAxis.setDrawGridLines(false);
         rightAxis.setTypeface(mTfLight);
         rightAxis.setLabelCount(0, false);
-        rightAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10","20","30","40","50"}));
+        rightAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
         rightAxis.setSpaceTop(0f);
         rightAxis.setDrawZeroLine(false);
         rightAxis.setAxisMinimum(0); // this replaces setStartAtZero(true)
@@ -280,7 +332,6 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         yValues.add(new BarEntry(4, 50));
 
 
-
         BarDataSet set1;
 
         if (mChartOne.getData() != null && mChartOne.getData().getDataSetCount() > 0) {
@@ -312,7 +363,7 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
     }
 
 
-    private void forFive(){
+    private void forFive() {
 
 
         mTfRegular = Typeface.createFromAsset(GraphInScroll.this.getAssets(), "OpenSans-Regular.ttf");
@@ -365,13 +416,13 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setLabelCount(6);
         xAxis.setSpaceMin(0.2f);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10","20","30","40","50"}));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
 
 
         YAxis leftAxis = mChartThree.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
         leftAxis.setLabelCount(5, false);
-        leftAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10","20","30","40","50"}));
+        leftAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
 
         IAxisValueFormatter custom = new MyAxisValueFormatter();
         leftAxis.setValueFormatter(custom);
@@ -385,7 +436,7 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         rightAxis.setDrawGridLines(false);
         rightAxis.setTypeface(mTfLight);
         rightAxis.setLabelCount(0, false);
-        rightAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10","20","30","40","50"}));
+        rightAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
         rightAxis.setSpaceTop(0f);
         rightAxis.setDrawZeroLine(false);
         rightAxis.setAxisMinimum(0); // this replaces setStartAtZero(true)
@@ -448,9 +499,9 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         });
 
 
-
     }
-    private void forThree(){
+
+    private void forThree() {
 
         barWidth = 0.3f;
         barSpace = 0f;
@@ -555,7 +606,6 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
         yValues.add(new BarEntry(4, 50));
 
 
-
         BarDataSet set1;
 
         if (mChartThree.getData() != null && mChartThree.getData().getDataSetCount() > 0) {
@@ -613,10 +663,8 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
     }
 
 
-
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-
 
 
     }
@@ -625,4 +673,7 @@ public class GraphInScroll  extends AppCompatActivity implements OnChartValueSel
     public void onNothingSelected() {
 
     }
+
+
+
 }

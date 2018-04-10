@@ -29,7 +29,7 @@ public interface WebServiceInterface {
     Call<ResponseBody> logout(@Path("api_token") String api_token);
 
 
-    @GET("/admin/api/dashboard")
+    @GET("admin/api/dashboard")
     Call<ResponseBody> dashBoard(@Query("api_token") String api_token);
 
 
