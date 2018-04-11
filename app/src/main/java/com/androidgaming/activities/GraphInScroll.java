@@ -82,6 +82,19 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
     }
 
+    ArrayList<String> chart1Data;
+    ArrayList<String> chart1Categories;
+
+
+    ArrayList<String> chart2S1Data;
+    ArrayList<String> chart2S2Data;
+    ArrayList<String> chart2S3Data;
+    ArrayList<String> chart2Categories;
+
+
+    ArrayList<String> chart3Data;
+    ArrayList<String> chart3Categories;
+
     private void callAPI() {
         progressHUD.show();
         WebServiceInterface api = ApiFactory.getRetrofitClientWithHeader().create(WebServiceInterface.class);
@@ -94,6 +107,92 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
                     try {
                         JSONObject responseJson = new JSONObject(HelperMethods.responseYesSuccessful(response));
                         progressHUD.hide();
+
+                        chart1Data = new ArrayList<>();
+                        chart1Categories = new ArrayList<>();
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart1").getJSONArray("data").length(); i++) {
+
+                            chart1Data.add(responseJson.getJSONObject("data").getJSONObject("chart1").getJSONArray("data").getString(i));
+
+
+                        }
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart1").getJSONArray("categories").length(); i++) {
+
+                            chart1Categories.add(responseJson.getJSONObject("data").getJSONObject("chart1").getJSONArray("categories").getString(i));
+
+                        }
+
+
+                        chart2S1Data = new ArrayList<>();
+                        chart2S2Data = new ArrayList<>();
+                        chart2S3Data = new ArrayList<>();
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s1").length(); i++) {
+
+                            chart2S1Data.add(responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s1").getString(i));
+
+
+                        }
+
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s2").length(); i++) {
+
+                            chart2S2Data.add(responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s2").getString(i));
+
+
+                        }
+
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s3").length(); i++) {
+
+                            chart2S3Data.add(responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s3").getString(i));
+
+
+                        }
+
+
+
+                            for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONArray("categories").length(); i++) {
+
+                                chart2Categories.add(responseJson.getJSONObject("data").getJSONObject("chart2").getJSONArray("categories").getString(i));
+
+
+                        }
+
+
+
+                        chart3Data = new ArrayList<>();
+                        chart3Categories = new ArrayList<>();
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart3").getJSONObject("data").getJSONArray("data").length(); i++) {
+
+                            chart3Data.add(responseJson.getJSONObject("data").getJSONObject("chart3").getJSONObject("data").getJSONArray("data").getString(i));
+
+
+                        }
+
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart3").getJSONArray("categories").length(); i++) {
+
+
+                            chart3Categories.add(responseJson.getJSONObject("data").getJSONObject("chart3").getJSONArray("categories").getString(i));
+
+                        }
+
+
+
+                        Log.e("TAG", "" + chart1Data.size());
+                        Log.e("TAG", "" + chart1Categories.size());
+
+                        Log.e("TAG", "" + chart2S1Data.size());
+                        Log.e("TAG", "" + chart2S2Data.size());
+                        Log.e("TAG", "" + chart2S3Data.size());
+
+
+                        Log.e("TAG", "" + chart3Data.size());
+                        Log.e("TAG", "" + chart3Categories.size());
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -180,7 +279,6 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
         });
 
     }
-
 
 
     private void forOne() {
@@ -673,7 +771,6 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
     public void onNothingSelected() {
 
     }
-
 
 
 }
