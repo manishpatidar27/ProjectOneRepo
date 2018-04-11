@@ -128,6 +128,7 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
                         chart2S1Data = new ArrayList<>();
                         chart2S2Data = new ArrayList<>();
                         chart2S3Data = new ArrayList<>();
+                        chart2Categories= new ArrayList<>();
 
                         for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s1").length(); i++) {
 
@@ -166,9 +167,9 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
                         chart3Data = new ArrayList<>();
                         chart3Categories = new ArrayList<>();
 
-                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart3").getJSONObject("data").getJSONArray("data").length(); i++) {
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart3").getJSONArray("data").length(); i++) {
 
-                            chart3Data.add(responseJson.getJSONObject("data").getJSONObject("chart3").getJSONObject("data").getJSONArray("data").getString(i));
+                            chart3Data.add(responseJson.getJSONObject("data").getJSONObject("chart3").getJSONArray("data").getString(i));
 
 
                         }
@@ -192,6 +193,8 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
                         Log.e("TAG", "" + chart3Data.size());
                         Log.e("TAG", "" + chart3Categories.size());
+
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
