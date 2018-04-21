@@ -25,6 +25,14 @@
     <dimen name="my_info_text_size">14sp</dimen>
     <dimen name="text_size_no_items_found">18sp</dimen>
 
+    <dimen name="graph_size">500dp</dimen>
+    <dimen name="graph_layout_size">550dp</dimen>
+
+
+    <dimen name="graph_layout_large_size">600dp</dimen>
+
+
+
 
     <dimen name="border_for_separator">0.5dp</dimen>
 </resources>

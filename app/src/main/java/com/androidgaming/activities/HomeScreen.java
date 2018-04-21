@@ -30,6 +30,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     LinearLayout dashBoardLayout;
     LinearLayout logoutLayout;
     private ProgressHUD progressHUD;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +46,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         logoutLayout.setOnClickListener(this);
     }
 
-    private void initView()
-    {
+    private void initView() {
         progressHUD = ProgressHUD.init(HomeScreen.this);
         logoutLayout = (LinearLayout) findViewById(R.id.logoutLayout);
         dashBoardLayout = (LinearLayout) findViewById(R.id.dashBoardLayout);
@@ -54,8 +54,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void dashBoardApi()
-    {
+    private void dashBoardApi() {
         WebServiceInterface api = ApiFactory.getRetrofitClientWithHeader().create(WebServiceInterface.class);
         Call<ResponseBody> call = null;
         call = api.logout(CustomPreference.getInstance(HomeScreen.this).getValue(PreferenceKeys.API_TOKEN));
@@ -67,9 +66,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 if (response.isSuccessful()) {
                     try {
                         JSONObject responseJson = new JSONObject(HelperMethods.responseYesSuccessful(response));
-                        Log.e(Constants.TAG_LOGCAT , "Dash Board Screen Response are  =====>>>>>  "+responseJson.toString() );
-
-
+                        Log.e(Constants.TAG_LOGCAT, "Dash Board Screen Response are  =====>>>>>  " + responseJson.toString());
 
 
                     } catch (Exception e) {
@@ -77,7 +74,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     }
 
                 }
-
 
 
             }
@@ -90,8 +86,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void logoutApi()
-    {
+    private void logoutApi() {
         progressHUD.show();
         WebServiceInterface api = ApiFactory.getRetrofitClientWithHeader().create(WebServiceInterface.class);
         Call<ResponseBody> call = null;
@@ -102,15 +97,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 if (response.isSuccessful()) {
                     try {
                         JSONObject responseJson = new JSONObject(HelperMethods.responseYesSuccessful(response));
-                        Log.e(Constants.TAG_LOGCAT , "Logout  Response of Api are =====>>>>>  "+responseJson.toString() );
+                        Log.e(Constants.TAG_LOGCAT, "Logout  Response of Api are =====>>>>>  " + responseJson.toString());
 
-                        if (responseJson.getString("status").equalsIgnoreCase("false"))
-                        {
+                        if (responseJson.getString("status").equalsIgnoreCase("false")) {
                             progressHUD.hide();
                             CustomPreference.getInstance(HomeScreen.this).clearSharedPreference();
                             navigateToLoginScreen();
-                        } else
-                        {
+                        } else {
                             progressHUD.hide();
 
                         }
@@ -159,12 +152,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                             @Override
                             public void onAccepted() {
 
-                                if (CheckInternet.isInternetOn(HomeScreen.this))
-                                {
+                                if (CheckInternet.isInternetOn(HomeScreen.this)) {
                                     logoutApi();
-                                }
-                                else
-                                {
+                                } else {
                                     DialogConstant.showInternetNotWorking(HomeScreen.this);
                                 }
 

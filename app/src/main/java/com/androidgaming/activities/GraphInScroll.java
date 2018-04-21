@@ -1,6 +1,7 @@
 package com.androidgaming.activities;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,15 +10,23 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.androidgaming.R;
+import com.androidgaming.adapter.ProductivityAdapter;
 import com.androidgaming.graph.MyAxisValueFormatter;
 import com.androidgaming.helper.Constants;
 import com.androidgaming.helper.CustomPreference;
 import com.androidgaming.helper.PreferenceKeys;
 import com.androidgaming.helper.ProgressHUD;
+import com.androidgaming.model.FeedBackModel;
+import com.androidgaming.model.HostProductivity;
 import com.androidgaming.utility.HelperMethods;
 import com.androidgaming.webservice.ApiFactory;
 import com.androidgaming.webservice.WebServiceInterface;
@@ -67,18 +76,51 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
     private CardView viewFiveInScroll;
     private ProgressHUD progressHUD;
 
+
+    private ImageView moveUPFeedBack;
+    private ImageView moveDownFeedBack;
+    private TextView nameOfPersonGaveFeedBack;
+    private TextView patronComment;
+    private TextView feedBackLocation;
+    private TextView feedBackDate;
+    private TextView middleText;
+    private RecyclerView productivityList;
+    private LinearLayoutManager linearLayoutManager;
+    private HostProductivity hostProductivity;
+    private ProductivityAdapter hostProductivityAdapter;
+    private ImageView moveBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_in_scroll);
 
         progressHUD = ProgressHUD.init(GraphInScroll.this);
+        moveBack = (ImageView) findViewById(R.id.moveBack);
+        moveBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         callAPI();
         forTabs();
         forScrollView();
-        forOne();
-        forThree();
-        forFive();
+        forTwoViews();
+
+
+
+    }
+
+    private void forTwoViews() {
+
+        moveUPFeedBack = (ImageView) findViewById(R.id.moveUPFeedBack);
+        moveDownFeedBack = (ImageView) findViewById(R.id.moveDownFeedBack);
+        nameOfPersonGaveFeedBack = (TextView) findViewById(R.id.nameOfPersonGaveFeedBack);
+        patronComment = (TextView) findViewById(R.id.patronComment);
+        feedBackLocation = (TextView) findViewById(R.id.feedBackLocation);
+        feedBackDate = (TextView) findViewById(R.id.feedBackDate);
+        middleText = (TextView) findViewById(R.id.middle_text);
 
     }
 
@@ -94,6 +136,10 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
     ArrayList<String> chart3Data;
     ArrayList<String> chart3Categories;
+
+
+    ArrayList<FeedBackModel> feedBackListModel;
+    ArrayList<HostProductivity> hostProductivityModel;
 
     private void callAPI() {
         progressHUD.show();
@@ -128,7 +174,7 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
                         chart2S1Data = new ArrayList<>();
                         chart2S2Data = new ArrayList<>();
                         chart2S3Data = new ArrayList<>();
-                        chart2Categories= new ArrayList<>();
+                        chart2Categories = new ArrayList<>();
 
                         for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONObject("data").getJSONArray("s1").length(); i++) {
 
@@ -154,14 +200,12 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
                         }
 
 
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONArray("categories").length(); i++) {
 
-                            for (int i = 0; i < responseJson.getJSONObject("data").getJSONObject("chart2").getJSONArray("categories").length(); i++) {
-
-                                chart2Categories.add(responseJson.getJSONObject("data").getJSONObject("chart2").getJSONArray("categories").getString(i));
+                            chart2Categories.add(responseJson.getJSONObject("data").getJSONObject("chart2").getJSONArray("categories").getString(i));
 
 
                         }
-
 
 
                         chart3Data = new ArrayList<>();
@@ -181,8 +225,7 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
                         }
 
-
-
+                        forThree();
                         Log.e("TAG", "" + chart1Data.size());
                         Log.e("TAG", "" + chart1Categories.size());
 
@@ -194,7 +237,63 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
                         Log.e("TAG", "" + chart3Data.size());
                         Log.e("TAG", "" + chart3Categories.size());
 
+                        forOne();
 
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        feedBackListModel =new ArrayList<>();
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONArray("feedbacks").length(); i++) {
+
+
+                            FeedBackModel model = new FeedBackModel();
+
+//                            model.setName(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("name")+" Position "+i);
+//                            model.setPatron_comment(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("patron_comment")+" Position "+i);
+//                            model.setLocation(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("location")+" Position "+i);
+//                            model.setDate(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("date")+" Position "+i);
+//                            model.setTime(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("time")+" Position "+i);
+
+                            model.setName(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("name"));
+                            model.setPatron_comment(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("patron_comment"));
+                            model.setLocation(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("location"));
+                            model.setDate(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("date"));
+                            model.setTime(responseJson.getJSONObject("data").getJSONArray("feedbacks").getJSONObject(i).getString("time"));
+
+                            feedBackListModel.add(model);
+
+                        }
+                        forTwo();
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        hostProductivityModel =new ArrayList<>();
+                        for (int i = 0; i < responseJson.getJSONObject("data").getJSONArray("productivity").length(); i++) {
+
+
+                            HostProductivity model = new HostProductivity();
+
+
+                            model.setName(responseJson.getJSONObject("data").getJSONArray("productivity").getJSONObject(i).getString("name"));
+                            model.setCount(responseJson.getJSONObject("data").getJSONArray("productivity").getJSONObject(i).getString("count"));
+
+
+                            hostProductivityModel.add(model);
+
+                        }
+                        forFour();
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+                        forFive();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -206,6 +305,79 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
             public void onFailure(Call<ResponseBody> call, Throwable t) {
             }
         });
+    }
+
+    private void forFour() {
+
+        productivityList = (RecyclerView ) findViewById(R.id.productivityList);
+        linearLayoutManager = new LinearLayoutManager(GraphInScroll.this);
+        productivityList.setLayoutManager(linearLayoutManager);
+        productivityList.setItemAnimator(new DefaultItemAnimator());
+        productivityList.setHasFixedSize(true);
+
+        hostProductivityAdapter = new ProductivityAdapter(GraphInScroll.this, hostProductivityModel);
+        productivityList.setAdapter(hostProductivityAdapter);
+    }
+
+    int currentPositionFeedBack;
+    private void forTwo() {
+
+
+        patronComment.setText(feedBackListModel.get(0).getPatron_comment());
+        nameOfPersonGaveFeedBack.setText(feedBackListModel.get(0).getName());
+        feedBackLocation.setText(feedBackListModel.get(0).getLocation());
+        feedBackDate.setText(feedBackListModel.get(0).getDate());
+
+        moveUPFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(currentPositionFeedBack == feedBackListModel.size()-1){
+
+                    middleText.setText(currentPositionFeedBack+" "+"of"+feedBackListModel.size());
+                }else if(currentPositionFeedBack < feedBackListModel.size() -1){
+
+                    currentPositionFeedBack = currentPositionFeedBack + 1;
+                    middleText.setText(currentPositionFeedBack+" "+"of"+feedBackListModel.size());
+                    patronComment.setText(feedBackListModel.get(currentPositionFeedBack).getPatron_comment());
+                    nameOfPersonGaveFeedBack.setText(feedBackListModel.get(currentPositionFeedBack).getName());
+                    feedBackLocation.setText(feedBackListModel.get(currentPositionFeedBack).getLocation());
+                    feedBackDate.setText(feedBackListModel.get(currentPositionFeedBack).getDate());
+
+
+                }
+
+
+            }
+        });
+
+        moveDownFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(currentPositionFeedBack == 0){
+                    middleText.setText(currentPositionFeedBack+" "+"of"+feedBackListModel.size());
+                    patronComment.setText(feedBackListModel.get(0).getPatron_comment());
+                    nameOfPersonGaveFeedBack.setText(feedBackListModel.get(0).getName());
+                    feedBackLocation.setText(feedBackListModel.get(0).getLocation());
+                    feedBackDate.setText(feedBackListModel.get(0).getDate());
+
+
+                }else if(currentPositionFeedBack <= feedBackListModel.size() -1){
+
+                    currentPositionFeedBack = currentPositionFeedBack - 1;
+                    middleText.setText(currentPositionFeedBack+" "+"of"+feedBackListModel.size());
+                    patronComment.setText(feedBackListModel.get(currentPositionFeedBack).getPatron_comment());
+                    nameOfPersonGaveFeedBack.setText(feedBackListModel.get(currentPositionFeedBack).getName());
+                    feedBackLocation.setText(feedBackListModel.get(currentPositionFeedBack).getLocation());
+                    feedBackDate.setText(feedBackListModel.get(currentPositionFeedBack).getDate());
+
+
+                }
+            }
+        });
+
+
     }
 
     private void forScrollView() {
@@ -336,7 +508,9 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setLabelCount(6);
         xAxis.setSpaceMin(0.2f);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
+        //  xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"100", "200", "300", "400", "500"}));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(chart1Categories));
+        xAxis.setLabelRotationAngle(270);
 
 
         YAxis leftAxis = mChartOne.getAxisLeft();
@@ -374,63 +548,13 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
         mChartOne.setDrawValueAboveBar(false);
 
-//        Legend l = mChartOne.getLegend();
-//        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-//        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-//        l.setDrawInside(false);
-//        l.setForm(LegendForm.SQUARE);
-//        l.setFormSize(9f);
-//        l.setTextSize(11f);
-//        l.setXEntrySpace(4f);
-
-        // XYMarkerView mv = new XYMarkerView(this, xAxisFormatter);
-
-        // mv.setChartView(mChartOne); // For bounds control
-
-        //  mChartOne.setMarker(mv); // Set the marker to the chart
-
-        setDataOne(4, 4);
-
-        final RectF mOnValueSelectedRectF = new RectF();
-        mChartOne.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                if (e == null)
-                    return;
-
-                RectF bounds = mOnValueSelectedRectF;
-                mChartOne.getBarBounds((BarEntry) e, bounds);
-                MPPointF position = mChartOne.getPosition(e, YAxis.AxisDependency.LEFT);
-
-                Log.i("bounds", bounds.toString());
-                Log.i("position", position.toString());
-
-                Log.i("x-index", "low: " + mChartOne.getLowestVisibleX() + ", high: " + mChartOne.getHighestVisibleX());
-
-                MPPointF.recycleInstance(position);
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-
-    }
-
-    private void setDataOne(int count, float range) {
-
-
         ArrayList<BarEntry> yValues = new ArrayList<BarEntry>();
 
+        for (int i = 0; i < chart1Data.size(); i++) {
 
-        yValues.add(new BarEntry(0, 10));
-        yValues.add(new BarEntry(1, 20));
-        yValues.add(new BarEntry(2, 30));
-        yValues.add(new BarEntry(3, 40));
-        yValues.add(new BarEntry(4, 50));
+            yValues.add(new BarEntry(i, Integer.parseInt(chart1Data.get(i))));
+
+        }
 
 
         BarDataSet set1;
@@ -456,11 +580,36 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
             data.setValueTypeface(mTfLight);
             data.setBarWidth(0.5f);
             data.setDrawValues(false);
-
             mChartOne.setData(data);
 
 
         }
+
+
+        final RectF mOnValueSelectedRectF = new RectF();
+        mChartOne.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                if (e == null)
+                    return;
+
+                RectF bounds = mOnValueSelectedRectF;
+                mChartOne.getBarBounds((BarEntry) e, bounds);
+                MPPointF position = mChartOne.getPosition(e, YAxis.AxisDependency.LEFT);
+
+                Log.i("bounds", bounds.toString());
+                Log.i("position", position.toString());
+
+                Log.i("x-index", "low: " + mChartOne.getLowestVisibleX() + ", high: " + mChartOne.getHighestVisibleX());
+
+                MPPointF.recycleInstance(position);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
 
@@ -517,8 +666,10 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setLabelCount(6);
         xAxis.setSpaceMin(0.2f);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
+        //xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
 
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(chart3Categories));
+        xAxis.setLabelRotationAngle(270);
 
         YAxis leftAxis = mChartThree.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
@@ -571,140 +722,24 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
         //  mChartOne.setMarker(mv); // Set the marker to the chart
 
-        setDataThree(4, 4);
+
+//        ArrayList<BarEntry> yValues = new ArrayList<BarEntry>();
 
 
-        final RectF mOnValueSelectedRectF = new RectF();
-        mChartThree.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                if (e == null)
-                    return;
-
-                RectF bounds = mOnValueSelectedRectF;
-                mChartOne.getBarBounds((BarEntry) e, bounds);
-                MPPointF position = mChartThree.getPosition(e, YAxis.AxisDependency.LEFT);
-
-                Log.i("bounds", bounds.toString());
-                Log.i("position", position.toString());
-
-                Log.i("x-index", "low: " + mChartThree.getLowestVisibleX() + ", high: " + mChartThree.getHighestVisibleX());
-
-                MPPointF.recycleInstance(position);
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-
-    }
-
-    private void forThree() {
-
-        barWidth = 0.3f;
-        barSpace = 0f;
-        groupSpace = 0.4f;
-
-        groupBarChartThree = (BarChart) findViewById(R.id.groupBarChartThree);
-        groupBarChartThree.setDescription(null);
-        groupBarChartThree.setPinchZoom(false);
-        groupBarChartThree.setScaleEnabled(false);
-        groupBarChartThree.setDrawBarShadow(false);
-        groupBarChartThree.setDrawGridBackground(false);
-
-
-        //DUMMY DATA
-
-        int groupCount = 6;
-
-        ArrayList xVals = new ArrayList();
-
-        xVals.add("Jan");
-        xVals.add("Feb");
-        xVals.add("Mar");
-        xVals.add("Apr");
-        xVals.add("May");
-        xVals.add("Jun");
-
-        ArrayList yVals1 = new ArrayList();
-        ArrayList yVals2 = new ArrayList();
-
-
-        yVals1.add(new BarEntry(1, (float) 1));
-        yVals2.add(new BarEntry(1, (float) 2));
-        yVals1.add(new BarEntry(2, (float) 3));
-        yVals2.add(new BarEntry(2, (float) 4));
-        yVals1.add(new BarEntry(3, (float) 5));
-        yVals2.add(new BarEntry(3, (float) 6));
-        yVals1.add(new BarEntry(4, (float) 7));
-        yVals2.add(new BarEntry(4, (float) 8));
-        yVals1.add(new BarEntry(5, (float) 9));
-        yVals2.add(new BarEntry(5, (float) 10));
-        yVals1.add(new BarEntry(6, (float) 11));
-        yVals2.add(new BarEntry(6, (float) 12));
-
-
-        //to draw the graph
-        BarDataSet set1, set2;
-        set1 = new BarDataSet(yVals1, "A");
-        set1.setColor(Color.RED);
-        set2 = new BarDataSet(yVals2, "B");
-        set2.setColor(Color.BLUE);
-        BarData data = new BarData(set1, set2);
-        data.setValueFormatter(new LargeValueFormatter());
-        groupBarChartThree.setData(data);
-        groupBarChartThree.getBarData().setBarWidth(barWidth);
-        groupBarChartThree.getXAxis().setAxisMinimum(0);
-        groupBarChartThree.getXAxis().setAxisMaximum(0 + groupBarChartThree.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
-        groupBarChartThree.groupBars(0, groupSpace, barSpace);
-        groupBarChartThree.getData().setHighlightEnabled(false);
-        groupBarChartThree.invalidate();
-
-
-        //Draw the indicator
-
-        Legend l = groupBarChartThree.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(true);
-        l.setYOffset(20f);
-        l.setXOffset(0f);
-        l.setYEntrySpace(0f);
-        l.setTextSize(8f);
-
-        //X-axis
-        XAxis xAxis = groupBarChartThree.getXAxis();
-        xAxis.setGranularity(1f);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setAxisMaximum(6);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
-//Y-axis
-        groupBarChartThree.getAxisRight().setEnabled(false);
-        YAxis leftAxis = groupBarChartThree.getAxisLeft();
-        leftAxis.setValueFormatter(new LargeValueFormatter());
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setSpaceTop(35f);
-        leftAxis.setAxisMinimum(0f);
-    }
-
-    private void setDataThree(int count, float range) {
+//        yValues.add(new BarEntry(0, 10));
+//        yValues.add(new BarEntry(1, 20));
+//        yValues.add(new BarEntry(2, 30));
+//        yValues.add(new BarEntry(3, 40));
+//        yValues.add(new BarEntry(4, 50));
 
 
         ArrayList<BarEntry> yValues = new ArrayList<BarEntry>();
 
+        for (int i = 0; i < chart3Data.size(); i++) {
 
-        yValues.add(new BarEntry(0, 10));
-        yValues.add(new BarEntry(1, 20));
-        yValues.add(new BarEntry(2, 30));
-        yValues.add(new BarEntry(3, 40));
-        yValues.add(new BarEntry(4, 50));
+            yValues.add(new BarEntry(i, Integer.parseInt(chart3Data.get(i))));
+
+        }
 
 
         BarDataSet set1;
@@ -761,7 +796,166 @@ public class GraphInScroll extends AppCompatActivity implements OnChartValueSele
 
 
         }
+
+
+
+
+        final RectF mOnValueSelectedRectF = new RectF();
+        mChartThree.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                if (e == null)
+                    return;
+
+                RectF bounds = mOnValueSelectedRectF;
+                mChartOne.getBarBounds((BarEntry) e, bounds);
+                MPPointF position = mChartThree.getPosition(e, YAxis.AxisDependency.LEFT);
+
+                Log.i("bounds", bounds.toString());
+                Log.i("position", position.toString());
+
+                Log.i("x-index", "low: " + mChartThree.getLowestVisibleX() + ", high: " + mChartThree.getHighestVisibleX());
+
+                MPPointF.recycleInstance(position);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
+
     }
+
+    private void forThree() {
+
+        barWidth = 0.3f;
+        barSpace = 0.2f;
+        groupSpace = 0.4f;
+
+        groupBarChartThree = (BarChart) findViewById(R.id.groupBarChartThree);
+        groupBarChartThree.setDescription(null);
+        groupBarChartThree.setPinchZoom(false);
+        groupBarChartThree.setScaleEnabled(false);
+        groupBarChartThree.setDrawBarShadow(false);
+        groupBarChartThree.setDrawGridBackground(false);
+
+
+        //DUMMY DATA
+
+
+
+        ArrayList xVals = new ArrayList();
+
+
+        for (int i = 0; i < chart2Categories.size(); i++) {
+
+            xVals.add(chart2Categories.get(i));
+        }
+
+//        xVals.add("Jan");
+//        xVals.add("Feb");
+//        xVals.add("Mar");
+//        xVals.add("Apr");
+//        xVals.add("May");
+//        xVals.add("Jun");
+
+        ArrayList yVals1 = new ArrayList();
+        ArrayList yVals2 = new ArrayList();
+        ArrayList yVals3 = new ArrayList();
+
+        for (int i = 0; i < chart2S1Data.size(); i++) {
+
+            yVals1.add(new BarEntry(i, Float.parseFloat(chart2S1Data.get(i))));
+        }
+
+        for (int i = 0; i < chart2S2Data.size(); i++) {
+
+            yVals2.add(new BarEntry(i, Float.parseFloat(chart2S2Data.get(i))));
+        }
+
+        for (int i = 0; i < chart2S3Data.size(); i++) {
+
+            yVals3.add(new BarEntry(i, Float.parseFloat(chart2S3Data.get(i))));
+        }
+
+
+
+
+        //to draw the graph
+        BarDataSet set1, set2,set3;
+        set1 = new BarDataSet(yVals1, "A");
+        set1.setColor(Color.parseColor("#7E81B9"));
+        set2 = new BarDataSet(yVals2, "B");
+        set2.setColor(Color.parseColor("#8B8B8B"));
+        set3 = new BarDataSet(yVals3, "C");
+        set3.setColor(Color.BLUE);
+
+
+        BarData data = new BarData(set1, set2,set3);
+        data.setValueFormatter(new LargeValueFormatter());
+        groupBarChartThree.setData(data);
+        groupBarChartThree.getBarData().setBarWidth(barWidth);
+        groupBarChartThree.getXAxis().setAxisMinimum(0);
+        groupBarChartThree.getXAxis().setAxisMaximum(0 + groupBarChartThree.getBarData().getGroupWidth(groupSpace, barSpace) * chart2Categories.size());
+        groupBarChartThree.groupBars(0, groupSpace, barSpace);
+        groupBarChartThree.getData().setHighlightEnabled(false);
+        groupBarChartThree.invalidate();
+
+
+        //Draw the indicator
+        Legend l = groupBarChartThree.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(true);
+        l.setYOffset(20f);
+        l.setXOffset(0f);
+        l.setYEntrySpace(0f);
+        l.setTextSize(8f);
+
+
+//        //X-axis
+        XAxis xAxis = groupBarChartThree.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAxisMaximum(chart2Categories.size());
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
+        xAxis.setLabelRotationAngle(270);
+        xAxis.setDrawLabels(true);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setSpaceMin(0.2f);
+
+
+
+
+
+        groupBarChartThree.setExtraBottomOffset(150.0f);
+        groupBarChartThree.getLegend().setEnabled(false);
+
+
+
+        //Y-axis
+        groupBarChartThree.getAxisRight().setEnabled(false);
+
+        YAxis leftAxis = groupBarChartThree.getAxisLeft();
+        leftAxis.setTypeface(mTfLight);
+        leftAxis.setLabelCount(chart2S1Data.size(), false);
+        leftAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"10", "20", "30", "40", "50"}));
+        leftAxis.setAxisMinimum(0f);
+
+
+//        YAxis leftAxis = groupBarChartThree.getAxisLeft();
+//        leftAxis.setValueFormatter(new LargeValueFormatter());
+//        leftAxis.setDrawGridLines(true);
+//        leftAxis.setSpaceTop(35f);
+//        leftAxis.setAxisMinimum(0f);
+    }
+
 
 
     @Override
